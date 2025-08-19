@@ -1,14 +1,3 @@
-<!--
-@extends("layouts.app")
-
-@section("title", "Loan Management Dashboard")
-
-@section("content")
-    <h1>Loan Management</h1>
-    @livewire("loan-manager") {{-- This directive renders your Livewire component --}}
-@endsection
--->
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

@@ -1,5 +1,5 @@
 <div>
-    <h2>Amortization Schedule for Loan #{{ $loan->id }} </h2>
+    <h2>Amortization Schedule for Loan #{{ $loan->id }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="/loans" class="small text-xsmall" >back to Loans</a>  </h2>
 
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-300">

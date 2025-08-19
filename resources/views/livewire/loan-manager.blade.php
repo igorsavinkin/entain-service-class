@@ -41,12 +41,12 @@
                 <button type="submit">Update Loan</button>
                 <button type="button" wire:click="cancelEdit">Cancel</button>
             @else
-                <button type="submit">Create Loan</button>
+                <button type="submit"  class="btn btn-success" style="background-color:rgb(24, 132, 46); color: white; margin-left: 5px;">Create Loan</button>
             @endif
         </div>
     </form>
 
-    <h2>Your Loans</h2>
+    <h3>Current Loans</h3>
     <table border=1 >
         <thead>
             <tr>
@@ -68,7 +68,9 @@
                     <td>{{ $loan->loan_term_months }}</td>
                     <td>{{ $loan->start_date }}</td>
                     <td>
-                        <a href="/loans/{{ $loan->id }}/payments" class="text-blue-600 hover:underline">View Schedule</a>
+                        <a target="_blank" href="/loans/{{ $loan->id }}/payments"
+                         
+                        class="text-blue-600 hover:underline">&nbsp; View Schedule &nbsp;</a>
                     </td>                    
                     <td>
                         <button wire:click="editLoan({{ $loan->id }})">Edit</button>
