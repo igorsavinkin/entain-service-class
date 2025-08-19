@@ -6,6 +6,7 @@ use App\Models\Loan;
 use App\Models\Payment;
 use Carbon\Carbon;
 
+
 class AmortizationService
 {
     public function generateSchedule(Loan $loan)

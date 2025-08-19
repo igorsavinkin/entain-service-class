@@ -1,4 +1,4 @@
-<div>
+hi to all <div>
     <h2>Amortization Schedule for Loan #{{ $loan->id }}</h2>
 
     <div class="overflow-x-auto">

@@ -47,7 +47,7 @@
     </form>
 
     <h2>Your Loans</h2>
-    <table>
+    <table border=1 >
         <thead>
             <tr>
                 <th>ID</th>
