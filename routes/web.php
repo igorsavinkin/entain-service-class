@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use app\Http\Livewire\LoanManager;
+use app\Http\Livewire\LoanPaymentsViewer;
 use App\Models\Loan;
 
 Route::get('/', function () {
@@ -29,8 +30,10 @@ Route::middleware(['auth'])->group(function () {
     })->name("loans.index");
 
     // we protect the payments viewer route as well
-    Route::get("/loans/{loan}/payments", function (Loan $loan) {
-        return view("loans.payments", compact("loan"));
+    //Route::get("/loans/{loan}/payments", LoanPaymentsViewer::class);
+
+    Route::get("/loans/{loan}/payments", function (Loan $loan) { 
+        return view("loans.payments",  compact("loan") );
     })->name("loans.payments.show");
 });
 

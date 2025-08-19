@@ -1,5 +1,5 @@
-hi to all <div>
-    <h2>Amortization Schedule for Loan #{{ $loan->id }}</h2>
+<div>
+    <h2>Amortization Schedule for Loan #{{ $loan->id }} </h2>
 
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-300">
