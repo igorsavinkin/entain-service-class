@@ -54,6 +54,8 @@ class AmortizationService
                 'updated_at' => now(),
             ];
         }
+        // Delete existing payments for this loan
+        Payment::where('loan_id', $loan->id)->delete();
 
         // Save the generated payment schedule to the payments table
         Payment::insert($payments);

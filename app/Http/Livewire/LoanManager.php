@@ -69,6 +69,11 @@ class LoanManager extends Component
             'start_date' => $this->start_date,
         ]);
 
+        // Generate amortization schedule after loan update
+        $amortizationService = new AmortizationService();
+        $amortizationService->generateSchedule($loan);
+
+
         $this->cancelEdit();
         session()->flash('message', 'Loan updated successfully.');
     }
@@ -83,6 +88,9 @@ class LoanManager extends Component
         $loan = Loan::where('user_id', auth()->id())->findOrFail($loanId);
         $loan->delete();
         
+        // delete all payments for this loan
+        Payment::where('loan_id', $loanId)->delete();
+
         session()->flash('message', 'Loan deleted successfully.');
     }
 
