@@ -15,11 +15,11 @@ class AmortizationServiceTest extends TestCase
     /** @test */
     public function it_generates_correct_amortization_schedule_for_a_loan()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(); // mock a user
         
         // Create a dummy loan for testing
         $loan = Loan::create([
-            'user_id' => $user->id, // Assuming a user exists or mock one
+            'user_id' => $user->id, 
             'principal_amount' => 100000.00,
             'interest_rate' => 0.05, // 5% annual interest
             'loan_term_months' => 12, // 12 months
@@ -32,10 +32,11 @@ class AmortizationServiceTest extends TestCase
         // Assertions for the generated schedule
         $this->assertCount(12, $schedule); // Should have 12 payments
 
-        // Example: Assert the first payment details
+        // Assert the first payment details
         $firstPayment = $schedule[0];
         $this->assertEquals('2025-02-01', $firstPayment['payment_date']);
-        // You would calculate expected values manually or using a known amortization calculator
+
+        // We calculate expected values manually or using a known amortization calculator
         // For a $100,000 loan at 5% annual interest over 12 months:
         // Monthly Payment (M) = 100000 * (0.05/12 * (1 + 0.05/12)^12) / ((1 + 0.05/12)^12 - 1) = 8560.75
         // First month interest = 100000 * (0.05/12) = 416.67
@@ -47,11 +48,11 @@ class AmortizationServiceTest extends TestCase
         $this->assertEquals(8560.75, $firstPayment['total_payment']);
         $this->assertEquals(91855.92, $firstPayment['remaining_balance']);
 
-        // Example: Assert the last payment details (adjust for potential rounding differences)
+        // Assert the last payment details 
         $lastPayment = end($schedule);
-        $this->assertEquals(0.00, round($lastPayment['remaining_balance'], 2)); // Remaining balance should be zero at the end
-
-        // Add more assertions for other payments or edge cases (e.g., 0% interest, very short/long terms)
+        // Remaining balance should be zero at the end
+        // We round the remaining balance to 2 decimal places to avoid floating point precision issues
+        $this->assertEquals(0.00, round($lastPayment['remaining_balance'], 2)); 
     }
 
     /** @test */
@@ -78,6 +79,4 @@ class AmortizationServiceTest extends TestCase
         }
         $this->assertEquals(0.00, round(end($schedule)['remaining_balance'], 2));
     }
-
-    // more test methods for different scenarios and edge cases
 }

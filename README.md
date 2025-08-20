@@ -220,7 +220,11 @@ This section addresses common problems encountered during development and provid
 
 Also, ensure `resources/views/livewire/loan-payments-viewer.blade.php` contains the actual HTML structure to display the payments data.
 
-## 8. Development Tools
+## 8. Tests
+
+The Unit tests are developed to test the amortization calculation. They are located in the `Tests\Unit\AmortizationServiceTest` class. They check corretness of amortization schedule calculation as well as the proper work amortization for zero interest rate.
+
+## 9. Development Tools
 
 This project is developed using standard Laravel practices. You'll need the following tools at your Linux/WSL machine:
 
@@ -233,11 +237,11 @@ This project is developed using standard Laravel practices. You'll need the foll
 *   **VS Code:** A lightweight yet powerful source code editor with extensive extensions for Laravel, PHP, and Livewire development.
 
 
-## 9. Contributing
+## 10. Contributing
 
 Contributions are welcome! If you find a bug or have a feature request, please open an issue on the GitHub repository. If you'd like to contribute code, please fork the repository and submit a pull request.
 
-## 10. License
+## 11. License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
