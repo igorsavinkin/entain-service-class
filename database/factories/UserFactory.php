@@ -23,6 +23,17 @@ class UserFactory extends Factory
         ];
     }
 
+    /*
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'password' => Hash::make('password'),
+        ];
+    } 
+    * /
+
     /**
      * Indicate that the model's email address should be unverified.
      *
@@ -37,3 +48,5 @@ class UserFactory extends Factory
         });
     }
 }
+
+ 
