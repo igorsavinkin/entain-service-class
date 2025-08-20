@@ -87,12 +87,12 @@ Generate a new application key:
 php artisan key:generate
 ```
 
-Open the `.env` file and configure your database connection details:
+Open the `.env` file and configure your database connection details (for PostgreSQL):
 
 ```dotenv
-DB_CONNECTION=mysql
+DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
-DB_PORT=3306
+DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_database_user
 DB_PASSWORD=your_database_password
@@ -132,7 +132,7 @@ php artisan migrate --seed
 
 This application uses Laravel Breeze for user authentication. After installation, you will have routes for registration, login, password reset, etc.
 
-To access the protected areas of the application (like loan management), the app user will need to register and log in.
+To access the protected areas of the application (like loan management), you will need to register and log in.
 
 *   **Register:** Navigate to `/register` to create a new user account.
 *   **Login:** Navigate to `/login` to log in with an existing account.
@@ -146,7 +146,7 @@ Once logged in, you can access the loan management dashboard:
 *   **Access:** Navigate to `/loans`.
 *   **Create Loan:** Use the form on the dashboard to input new loan details (Principal Amount, Interest Rate, Loan Term, Start Date).
 *   **View Loans:** All existing loans will be listed in a table.
-*   **Edit/Delete Loans:** (Assuming these functionalities are implemented in `LoanManager` Livewire component).
+*   **Edit/Delete Loans:** (These functionalities are implemented in `LoanManager` Livewire component).
 
 ### 6.2. Viewing Loan Payments
 
@@ -241,4 +241,4 @@ This project is open-sourced software licensed under the [MIT license](https://o
 
 ---
 
-**Author:** Igor Savinkin, https://webscraping.pro
+**Author:**  Igor Savinkin, https://webscraping.pro
