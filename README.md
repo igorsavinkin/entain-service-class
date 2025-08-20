@@ -24,7 +24,7 @@ This document provides a comprehensive guide to setting up, configuring, and usi
     *   [Undefined Variable: Header](#73-undefined-variable-header)
     *   [Target Class [Loan] Does Not Exist](#74-target-class-loan-does-not-exist)
     *   [Empty Screen on Payments Page](#75-empty-screen-on-payments-page)
-8.  [Test](#8-tests)   
+8.  [Tests](#8-tests)   
 9.  [Development Tools](#9-development-tools)
 9.  [Contributing](#10-contributing)
 10. [License](#11-license)
