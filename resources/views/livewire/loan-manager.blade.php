@@ -68,9 +68,8 @@
                     <td>{{ $loan->loan_term_months }}</td>
                     <td>{{ $loan->start_date }}</td>
                     <td>
-                        <a target="_blank" href="/loans/{{ $loan->id }}/payments"
-                         
-                        class="text-blue-600 hover:underline">&nbsp; View Schedule &nbsp;</a>
+                        &nbsp; <a target="_blank" href="/loans/{{ $loan->id }}/payments"                         
+                        class="text-blue-600 hover:underline">View Schedule </a>&nbsp;
                     </td>                    
                     <td>
                         <button wire:click="editLoan({{ $loan->id }})">Edit</button>
