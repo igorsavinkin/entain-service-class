@@ -59,11 +59,9 @@ Follow these steps to get the application up and running on your local machine.
 First, clone the application repository to your local machine:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/igorsavinkin/loan-management-app.git
 cd loan-management-app
 ```
-
-Replace `<repository-url>` with the actual URL of your Git repository.
 
 ### 4.2. Composer Dependencies
 
@@ -224,12 +222,16 @@ Also, ensure `resources/views/livewire/loan-payments-viewer.blade.php` contains 
 
 ## 8. Development Tools
 
-This project is developed using standard Laravel practices. While any modern IDE can be used, tools like **Cursor.com AI code editor** can enhance the development experience through AI-assisted coding and vibe-coding with conventional coding. Other recommended tools include:
+This project is developed using standard Laravel practices. You'll need the following tools at your Linux/WSL machine:
+
+*   **Composer:** For managing PHP dependencies.
+*   **npm (or Yarn):** For managing frontend JavaScript dependencies.
+
+ While any modern IDE can be used, tools like **Cursor.com AI code editor** can enhance the development experience through AI-assisted coding and vibe-coding with conventional coding. Other recommended tools include:
 
 *   **PHPStorm:** A powerful IDE specifically designed for PHP development.
 *   **VS Code:** A lightweight yet powerful source code editor with extensive extensions for Laravel, PHP, and Livewire development.
-*   **Composer:** For managing PHP dependencies.
-*   **npm (or Yarn):** For managing frontend JavaScript dependencies.
+
 
 ## 9. Contributing
 
