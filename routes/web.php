@@ -41,6 +41,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/db-check', function() {
+    try {
+        DB::connection()->getPdo();
+        return "Connected to: <b>" . DB::connection()->getDatabaseName() . "</b>";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});
+
 Route::get('/phpinfo', function () {
     return phpinfo();
 });

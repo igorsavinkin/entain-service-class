@@ -16,7 +16,7 @@ class AmortizationServiceTest extends TestCase
     public function it_generates_correct_amortization_schedule_for_a_loan()
     {
         $user = User::factory()->create(); // mock a user
-        
+
         // Create a dummy loan for testing
         $loan = Loan::create([
             'user_id' => $user->id, 
