@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This project demonstrates a seamless integration between a Laravel backend and a React frontend to display a promotional leaderboard. The application features a service-oriented architecture with Data Transfer Objects (DTOs) for clean separation of concepts.
+This project demonstrates a seamless integration between a Laravel backend and a React frontend to display a promotional leaderboard. The application features a service-oriented architecture with Data Transfer Objects (DTOs) for clean separation of concepts as well as caching for optimised data transfer.
 
 ## Requirements
 
@@ -23,7 +23,7 @@ This project demonstrates a seamless integration between a Laravel backend and a
 - **Node.js**: 14.x or higher
 - **Composer**: For PHP dependencies
 - **NPM**: For JavaScript dependencies
-- **Database**: MySQL, PostgreSQL, or SQLite
+- **Database**: PostgreSQL
 
 ## Setup Instructions
 
@@ -101,6 +101,7 @@ php artisan serve
 The service class contains the core business logic for calculating leaderboard rankings. It:
 - Executes the parameterized SQL query from the task #1.
 - Returns DTOs instead of database entities
+- Performs data caching to optimize the operation in case of high data traffic
 - Is framework-agnostic for better testability
 
 #### 2. Data Transfer Object (DTO)
@@ -120,10 +121,10 @@ The controller handles HTTP requests and:
 - Handles errors and exceptions
 
 #### 4. Routes
-**Location**: `routes/web.php`
+**Location**: `routes/web.php` &  `routes/api.php`
 
 Defines the application endpoints:
-- `/leaderboard`: API endpoint that returns JSON data
+- `/api/leaderboard`: API endpoint that returns JSON data
 - `/leaderboard-app`: Serves the React application
 
 #### 5. CORS Configuration
@@ -153,7 +154,7 @@ Serves as the entry point for the React application, including:
 
 1. React app makes a fetch request to `/leaderboard`
 2. Laravel controller calls the **PromotionService** service class
-3. The service executes the SQL query and returns DTO objects
+3. The service executes the SQL query and returns DTO objects or return cached data (for optimisation)
 4. Controller converts DTOs to JSON format
 5. React receives and displays the data in the leaderboard table
 
