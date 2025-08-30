@@ -181,4 +181,4 @@ If you encounter issues:
 
 ## License
 
-This project is a proprietary software owned by Igor Savinkin, [Webcraping.pro](https://webscraping.pro).
+This project is a proprietary software owned by Igor Savinkin, [Webscraping.pro](https://webscraping.pro).
