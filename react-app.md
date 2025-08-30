@@ -2,10 +2,13 @@ The React leaderboard app to Laravel controller! Here's what I've set up:
 # 1. Updated CORS Configuration
 Added `/leaderboard` to the allowed paths in `config/cors.php` so  React app can access the API
 
+# 2. Fixed Data Format
+Updated  PromotionController to convert the DTO objects to the snake_case format that  React app expects
+The controller now returns data with properties like player_rank, player_id, username, etc.
+
 # 3. Created Routes
 `/leaderboard` - API endpoint that returns JSON data
 `/leaderboard-app` - Serves the React app
-
 # 4. Created React App View
 Created `resources/views/leaderboard-app.blade.php` with  React code
 Fixed the React syntax to work with the browser-based version
