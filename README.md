@@ -129,6 +129,7 @@ The controller handles HTTP requests and:
 - Retrieves data from the Service class as DTOs
 - Converts DTOs to JSON format for the React app
 - Handles errors and exceptions
+- It facilitates pagination to optimize the data loading so that users don’t have to wait for all data to come before page is shown to them
 
 #### 4. Routes
 **Location**: `routes/web.php` &  `routes/api.php`
