@@ -108,11 +108,65 @@ The service class **contains the core business logic** for calculating leaderboa
 - Performs data caching to optimize the operation in case of high data traffic
 - Is framework-agnostic for better testability
 
+ Promotion Service - Usage Examples
+
+**Basic Usage, Getting Leaderboard Data**
+```php
+use App\Services\PromotionService;
+use Carbon\Carbon;
+
+$service = new PromotionService();
+$startDate = Carbon::parse('2025-06-18');
+$endDate = Carbon::parse('2025-06-25');
+$bonusPoints = 500;
+
+try {
+    $leaderboard = $service->getLeaderboard($startDate, $endDate, $bonusPoints);
+    
+    foreach ($leaderboard as $player) {
+        echo "Rank: {$player->rank}, Player: {$player->username}, Score: {$player->performanceScore}\n";
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+```
+
 The service class properly **handles exceptions**.
  - Basic exception handling: there is a `try/catch` block
  - Error logging: `Log::error()` is used.
  - Error callback: the `OnFailure()` mechanism is implemented.
  - Re-throwing an exception: the exception is not "swallowed"
+
+**Custom Error Handling with Callbacks**
+```php
+use App\Services\PromotionService;
+use Carbon\Carbon;
+
+$service = new PromotionService();
+
+// Register custom error handler
+$service->onFailure(function ($exception) {
+    // Send to error tracking service
+    Sentry::captureException($exception);
+    
+    // Log custom message
+    Log::error('Promotion service failed', [
+        'error' => $exception->getMessage(),
+        'time' => now()
+    ]);
+});
+
+try {
+    $leaderboard = $service->getLeaderboard(
+        Carbon::now()->subWeek(),
+        Carbon::now(),
+        500
+    );
+} catch (Exception $e) {
+    // Custom callback will be executed automatically
+}
+```
+
 
 #### 2. Data Transfer Object (DTO)
 **Location**: `app/DTOs/LeaderboardPlayerDTO.php`
