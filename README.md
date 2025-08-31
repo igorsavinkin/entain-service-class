@@ -21,7 +21,8 @@ This project demonstrates a seamless integration between a Laravel backend and a
 
 - **PHP**: 8.2.* (strict)  
   - The project already uses dependencies that require PHP 8.2   
-  - Performance: PHP 8.2 is faster and safer  
+  - Performance: PHP 8.2 is faster and safer
+  - Avoid problems with PHP 8.3/8.4 that may have breaking changes
   - Compatibility: Avoid version conflicts 
 - **Node.js**: 14.x or higher
 - **Composer**: For PHP dependencies
