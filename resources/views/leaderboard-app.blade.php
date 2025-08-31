@@ -45,56 +45,67 @@
 
         // The main application component
         function App() {
-            // --- State Management ---
             const [leaderboardData, setLeaderboardData] = React.useState([]);
             const [isLoading, setIsLoading] = React.useState(true);
             const [error, setError] = React.useState(null);
+            const [pagination, setPagination] = React.useState({
+                current_page: 1,
+                per_page: 20,
+                total: 0,
+                total_pages: 1
+            });
 
-            // --- Data Fetching ---
-            // This function simulates fetching data from an API.
-            // The `useCallback` hook memoizes the function to prevent unnecessary re-renders.
-            const fetchLeaderboardData = React.useCallback(() => {
-              setIsLoading(true);
-              setError(null);
-            
-               // Fetch from Laravel endpoint
-              fetch('/leaderboard') // Adjust port if needed
-                .then(response => {
-                  if (!response.ok) throw new Error('Network response was not ok');
-                  return response.json();
-                })
-                .then(data => {
-                  const sortedData = [...data].sort((a, b) => a.player_rank - b.player_rank);
-                  setLeaderboardData(sortedData);
-                })
-                .catch(err => {
-                  setError(err.message);
-                })
-                .finally(() => {
-                  setIsLoading(false);
-                });
+            const fetchLeaderboardData = React.useCallback((page = 1, forceRefresh = false) => {
+                setIsLoading(true);
+                setError(null);
+                
+                const url = `/leaderboard?page=${page}&per_page=20${forceRefresh ? '&refresh=true' : ''}`;
+    
+
+                fetch(`/leaderboard?page=${page}&per_page=20`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.json();
+                    })
+                    .then(responseData => {
+                        // get data from responseData.data
+                        setLeaderboardData(responseData.data);
+                        setPagination(responseData.meta);
+                    })
+                    .catch(err => {
+                        setError(err.message);
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
             }, []);
 
-            // --- Effects ---
-            // The `useEffect` hook calls the data fetching function when the component first mounts.
             React.useEffect(() => {
-                fetchLeaderboardData();
+                fetchLeaderboardData(1);
             }, [fetchLeaderboardData]);
 
-            // --- Render Logic ---
+            const handlePageChange = (newPage) => {
+                if (newPage >= 1 && newPage <= pagination.total_pages) {
+                    fetchLeaderboardData(newPage);
+                }
+            };
+
             return (
                 <div className="bg-gray-50 min-h-screen font-sans text-gray-800 p-4 sm:p-6 lg:p-8">
                     <div className="max-w-4xl mx-auto">
-                        {/* --- Header --- */}
+                        {/* Header */}
                         <header className="mb-6">
                             <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">Promotional Leaderboard</h1>
                             <p className="text-gray-600 mt-1">Check out the current standings and player performance.</p>
                         </header>
 
-                        {/* --- Control Bar --- */}
-                        <div className="flex justify-end items-center mb-4">
+                        {/* Control Bar */}
+                        <div className="flex justify-between items-center mb-4">
+                            <div className="text-sm text-gray-600">
+                                Showing {pagination.from} to {pagination.to} of {pagination.total} players
+                            </div>
                             <button
-                                onClick={fetchLeaderboardData}
+                                onClick={() => fetchLeaderboardData(pagination.current_page)}
                                 disabled={isLoading}
                                 className="flex items-center justify-center bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300 disabled:cursor-not-allowed transition-all duration-300"
                             >
@@ -117,7 +128,7 @@
                             </button>
                         </div>
 
-                        {/* --- Leaderboard Table --- */}
+                        {/* Leaderboard Table */}
                         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                             <div className="overflow-x-auto">
                                 <table className="w-full text-sm">
@@ -132,7 +143,9 @@
                                         {isLoading && leaderboardData.length === 0 ? (
                                             <tr>
                                                 <td colSpan="3">
-                                                    <Spinner />
+                                                    <div className="flex justify-center items-center p-8">
+                                                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ) : error ? (
@@ -155,7 +168,46 @@
                                 </table>
                             </div>
                         </div>
-                         {/* --- Footer --- */}
+
+                        {/* Pagination */}
+                        {pagination.total_pages > 1 && (
+                            <div className="flex justify-center mt-6 space-x-2">
+                                <button
+                                    onClick={() => handlePageChange(pagination.current_page - 1)}
+                                    disabled={pagination.current_page === 1 || isLoading}
+                                    className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition-colors"
+                                >
+                                    Previous
+                                </button>
+                                
+                                {Array.from({ length: pagination.total_pages }, (_, i) => i + 1)
+                                    .slice(Math.max(0, pagination.current_page - 3), Math.min(pagination.total_pages, pagination.current_page + 2))
+                                    .map(page => (
+                                    <button
+                                        key={page}
+                                        onClick={() => handlePageChange(page)}
+                                        disabled={isLoading}
+                                        className={`px-3 py-1 rounded ${
+                                            pagination.current_page === page 
+                                            ? 'bg-indigo-600 text-white' 
+                                            : 'bg-gray-200 hover:bg-gray-300'
+                                        } transition-colors`}
+                                    >
+                                        {page}
+                                    </button>
+                                ))}
+                                
+                                <button
+                                    onClick={() => handlePageChange(pagination.current_page + 1, true /* force refresh */)}
+                                    disabled={pagination.current_page === pagination.total_pages || isLoading}
+                                    className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition-colors"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Footer */}
                         <footer className="text-center mt-8 text-sm text-gray-500">
                             <p>&copy; {new Date().getFullYear()} Entain PLC. Igor Savinkin.</p>
                         </footer>

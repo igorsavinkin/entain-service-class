@@ -38,12 +38,17 @@ class PromotionService
     public function getLeaderboard(
         Carbon $startDate,
         Carbon $endDate,
-        int $bonusPoints = 500
+        int $bonusPoints = 500,
+        bool $forceRefresh = false
     ): array {
         // We do caching for optimize the operation in case of high data traffic 
         // Dynamic cache key based on the parameters
         $cacheKey = "promotional_leaderboard_{$startDate->toDateString()}_{$endDate->toDateString()}_{$bonusPoints}";
         $cacheDuration = 60; // Cache for 60 minutes
+
+        if ($forceRefresh) {
+            Cache::forget($cacheKey);
+        }
 
         // Return cached data if it exists
         if (Cache::has($cacheKey)) {
