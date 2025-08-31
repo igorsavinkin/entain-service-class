@@ -102,11 +102,17 @@ php artisan serve
 #### 1. Service Class
 **Location**: `app/Services/PromotionService.php`
 
-The service class contains the core business logic for calculating leaderboard rankings. It:
+The service class **contains the core business logic** for calculating leaderboard rankings. It:
 - Executes the parameterized SQL query from the task #1.
 - Returns DTOs instead of database entities
 - Performs data caching to optimize the operation in case of high data traffic
 - Is framework-agnostic for better testability
+
+The service class properly **handles exceptions**.
+ - Basic exception handling: there is a `try/catch` block
+ - Error logging: `Log::error()` is used.
+ - Error callback: the `OnFailure()` mechanism is implemented.
+ - Re-throwing an exception: the exception is not "swallowed"
 
 #### 2. Data Transfer Object (DTO)
 **Location**: `app/DTOs/LeaderboardPlayerDTO.php`
