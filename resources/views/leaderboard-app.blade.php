@@ -35,11 +35,14 @@
         );
 
         // Component to render a single row in the leaderboard table
-        const LeaderboardRow = ({ rank, username, score }) => (
+        const LeaderboardRow = ({ player }) => (
             <tr className="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200">
-                <td className="py-3 px-4 text-center font-semibold text-gray-700">{rank}</td>
-                <td className="py-3 px-4 text-left text-gray-800">{username}</td>
-                <td className="py-3 px-4 text-right font-mono text-indigo-600">{score.toLocaleString()}</td>
+                <td className="py-3 px-4 text-center font-semibold text-gray-700">{player.player_rank}</td>
+                <td className="py-3 px-4 text-center font-mono text-gray-600">{player.player_id}</td>
+                <td className="py-3 px-4 text-left text-gray-800">{player.username}</td>
+                <td className="py-3 px-4 text-right font-mono text-green-600">${player.total_wagered.toLocaleString()}</td>
+                <td className="py-3 px-4 text-right font-mono text-blue-600">${player.total_net_result.toLocaleString()}</td>
+                <td className="py-3 px-4 text-right font-mono text-indigo-600">{player.performance_score.toLocaleString()}</td>
             </tr>
         );
 
@@ -135,14 +138,17 @@
                                     <thead className="bg-gray-100 border-b-2 border-gray-200">
                                         <tr>
                                             <th className="py-3 px-4 text-center font-bold uppercase text-gray-600 tracking-wider">Rank</th>
-                                            <th className="py-3 px-4 text-left font-bold uppercase text-gray-600 tracking-wider">Player</th>
-                                            <th className="py-3 px-4 text-right font-bold uppercase text-gray-600 tracking-wider">Score</th>
+                                            <th className="py-3 px-4 text-center font-bold uppercase text-gray-600 tracking-wider">Player ID</th>
+                                            <th className="py-3 px-4 text-left font-bold uppercase text-gray-600 tracking-wider">Username</th>
+                                            <th className="py-3 px-4 text-right font-bold uppercase text-gray-600 tracking-wider">Total Wagered</th>
+                                            <th className="py-3 px-4 text-right font-bold uppercase text-gray-600 tracking-wider">Net Result</th>
+                                            <th className="py-3 px-4 text-right font-bold uppercase text-gray-600 tracking-wider">Performance Score</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {isLoading && leaderboardData.length === 0 ? (
                                             <tr>
-                                                <td colSpan="3">
+                                                <td colSpan="6">
                                                     <div className="flex justify-center items-center p-8">
                                                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
                                                     </div>
@@ -150,7 +156,7 @@
                                             </tr>
                                         ) : error ? (
                                             <tr>
-                                                <td colSpan="3" className="text-center py-8 px-4 text-red-500 font-semibold">
+                                                <td colSpan="6" className="text-center py-8 px-4 text-red-500 font-semibold">
                                                     {error}
                                                 </td>
                                             </tr>
@@ -158,9 +164,7 @@
                                             leaderboardData.map(player => (
                                                 <LeaderboardRow
                                                     key={player.player_id}
-                                                    rank={player.player_rank}
-                                                    username={player.username}
-                                                    score={player.performance_score}
+                                                    player={player}
                                                 />
                                             ))
                                         )}
